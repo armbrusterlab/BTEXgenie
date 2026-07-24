@@ -493,13 +493,12 @@ def main(argv: list[str] | None = None):
         "--blast-min-query-coverage",
         type=float,
         default=50.0,
+        help=(
+            "Minimum reference-protein coverage percent for filtered putative-target "
+            "BLASTP hits. Reference proteins are the BLASTP queries (default: 50.0)"
+        ),
     )
 
-    ap.add_argument(
-        "--blast-min-subject-coverage",
-        type=float,
-        default=50.0,
-    )
     ap.add_argument(
         "--blast-evalue",
         type=float,
@@ -700,7 +699,6 @@ def main(argv: list[str] | None = None):
             evalue=args.blast_evalue,
             min_identity=args.blast_min_identity,
             min_query_coverage=args.blast_min_query_coverage,
-            min_subject_coverage=args.blast_min_subject_coverage,
         )
 
         try:

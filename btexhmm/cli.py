@@ -78,13 +78,10 @@ def parse_args():
         "--blast-min-query-coverage",
         type=float,
         default=50.0,
-        help="Minimum query coverage percent for putative-target BLASTP hits (default: 50.0)",
-    )
-    p.add_argument(
-        "--blast-min-subject-coverage",
-        type=float,
-        default=50.0,
-        help="Minimum subject coverage percent for putative-target BLASTP hits (default: 50.0)",
+        help=(
+            "Minimum reference-protein coverage percent for filtered putative-target "
+            "BLASTP hits. Reference proteins are the BLASTP queries (default: 50.0)"
+        ),
     )
     p.add_argument(
         "--blast-evalue",
@@ -126,8 +123,6 @@ def main():
         str(args.blast_min_identity),
         "--blast-min-query-coverage",
         str(args.blast_min_query_coverage),
-        "--blast-min-subject-coverage",
-        str(args.blast_min_subject_coverage),
         "--blast-evalue",
         str(args.blast_evalue),
     ]
@@ -161,8 +156,6 @@ def main():
         top_cmd.extend(["--blast-min-identity", str(args.blast_min_identity)])
     if args.blast_min_query_coverage != 50.0:
         top_cmd.extend(["--blast-min-query-coverage", str(args.blast_min_query_coverage)])
-    if args.blast_min_subject_coverage != 50.0:
-        top_cmd.extend(["--blast-min-subject-coverage", str(args.blast_min_subject_coverage)])
     if args.blast_evalue != 1e-5:
         top_cmd.extend(["--blast-evalue", str(args.blast_evalue)])
 

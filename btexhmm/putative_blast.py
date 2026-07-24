@@ -94,7 +94,6 @@ class FilterSettings:
     evalue: float = 1e-5
     min_identity: float = 25.0
     min_query_coverage: float = 50.0
-    min_subject_coverage: float = 50.0
 
 
 @dataclass(frozen=True)
@@ -572,15 +571,6 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             "The reference proteins are BLASTP queries in this implementation."
         ),
     )
-    parser.add_argument(
-        "--min-subject-coverage",
-        type=float,
-        default=50.0,
-        help=(
-            "Deprecated compatibility option. Sample subject coverage is no longer "
-            "written to the summary reports or used for filtering."
-        ),
-    )
     return parser.parse_args(argv)
 
 
@@ -595,7 +585,6 @@ def main(argv: Sequence[str] | None = None) -> None:
         evalue=args.evalue,
         min_identity=args.min_identity,
         min_query_coverage=args.min_query_coverage,
-        min_subject_coverage=args.min_subject_coverage,
     )
 
     try:
