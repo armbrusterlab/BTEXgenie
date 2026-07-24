@@ -6,6 +6,7 @@ dependencies:
   - pip
   - hmmer>=3.3
   - prodigal
+  - blast
   - kofamscan
   - pandas>=2.0
   - numpy>=1.24

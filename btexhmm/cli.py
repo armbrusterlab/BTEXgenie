@@ -6,7 +6,9 @@ from .hmmscan import main as hmmscan_main
 from .logging_utils import command_logger
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_HMM_LIB = HERE / "hmms" / "all_models.hmm"
+DEFAULT_HMM_LIB = HERE / "hmms" / "BTEXgenie_updated.hmm"
+DEFAULT_PUTATIVE_TARGETS = HERE / "data" / "putative_targets.faa"
+DEFAULT_PUTATIVE_METADATA = HERE / "data" / "putative_targets.tsv"
 
 
 def parse_args():
@@ -65,12 +67,45 @@ def parse_args():
         action="store_true",
         help="Run the HMM search against the KOfam database in addition to the BTEX-HMM database.",
     )
+
+    p.add_argument(
+        "--blast-min-identity",
+        type=float,
+        default=25.0,
+        help="Minimum percent identity for reporting putative-target BLASTP hits (default: 25.0)",
+    )
+    p.add_argument(
+        "--blast-min-query-coverage",
+        type=float,
+        default=50.0,
+        help="Minimum query coverage percent for putative-target BLASTP hits (default: 50.0)",
+    )
+    p.add_argument(
+        "--blast-min-subject-coverage",
+        type=float,
+        default=50.0,
+        help="Minimum subject coverage percent for putative-target BLASTP hits (default: 50.0)",
+    )
+    p.add_argument(
+        "--blast-evalue",
+        type=float,
+        default=1e-5,
+        help=(
+            "BLASTP E-value threshold for putative target searches "
+            "(default: 1e-5)"
+        ),
+    )
     return p.parse_args()
 
 
 def main():
     args = parse_args()
     prodigal_mode = args.prodigal_mode or "single"
+
+    if not DEFAULT_HMM_LIB.is_file():
+        raise SystemExit(
+            f"[err] bundled BTEXgenie HMM database not found: {DEFAULT_HMM_LIB}"
+        )
 
     genomes = Path(args.genome_dir).resolve()
     outdir = Path(args.outdir).resolve()
@@ -82,6 +117,19 @@ def main():
         "--genomes-dir", str(genomes),
         "--out", str(out_csv),
         "--cpus", str(args.cpus),
+        "--putative-blast",
+        "--putative-targets",
+        str(DEFAULT_PUTATIVE_TARGETS),
+        "--putative-metadata",
+        str(DEFAULT_PUTATIVE_METADATA),
+        "--blast-min-identity",
+        str(args.blast_min_identity),
+        "--blast-min-query-coverage",
+        str(args.blast_min_query_coverage),
+        "--blast-min-subject-coverage",
+        str(args.blast_min_subject_coverage),
+        "--blast-evalue",
+        str(args.blast_evalue),
     ]
     if prodigal_mode == "meta":
         hmmscan_argv.append("-meta")
@@ -109,11 +157,20 @@ def main():
         top_cmd.extend(["--evalue", str(args.evalue)])
     if args.kofam:
         top_cmd.append("--kofam")
+    if args.blast_min_identity != 25.0:
+        top_cmd.extend(["--blast-min-identity", str(args.blast_min_identity)])
+    if args.blast_min_query_coverage != 50.0:
+        top_cmd.extend(["--blast-min-query-coverage", str(args.blast_min_query_coverage)])
+    if args.blast_min_subject_coverage != 50.0:
+        top_cmd.extend(["--blast-min-subject-coverage", str(args.blast_min_subject_coverage)])
+    if args.blast_evalue != 1e-5:
+        top_cmd.extend(["--blast-evalue", str(args.blast_evalue)])
 
     log_path = outdir / "btex_annotate.log"
     with command_logger(log_path):
         print(f"[info] writing btex-annotate log to {log_path}")
         print(f"[cmd] {shlex.join(top_cmd)}")
-        print("[info] running BTEXgenie on input genomes")
+        print(f"[info] using BTEXgenie HMM database: {DEFAULT_HMM_LIB}")
+        print("[info] running BTEXgenie hmmscan and putative-target BLASTP on input genomes")
         hmmscan_main(hmmscan_argv)
         print("Done!")

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "btexhmm"
-version = "0.1.0"
+version = "0.1.1"
 description = "BTEX HMM annotation and visualization"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -19,6 +19,7 @@ circos-r = []
 
 [project.scripts]
 btex-annotate = "btexhmm.cli:main"
+annotate-btex = "btexhmm.cli:main"
 btex-build-db = "btexhmm.build_db_cli:main"
 btex-run-circos = "btexhmm.circos_cli:main"
 btex-vis = "btexhmm.vis_cli:main"

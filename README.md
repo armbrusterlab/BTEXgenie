@@ -90,7 +90,7 @@ To run BTEXgenie, input can be either a directory or single file containing geno
 ### Example with protein files in *test_genomes*
 ```bash
 btex-annotate -g btexhmm/test_genomes/protein_fastas \
-              -o path/to/output_dir 
+              -o path/to/output_dir
 ```
 > [!NOTE]
 > For proper parsing of genomic coordinates, protein files produced from Prodigal are needed.
@@ -99,32 +99,39 @@ btex-annotate -g btexhmm/test_genomes/protein_fastas \
 ```bash
 btex-annotate -g btexhmm/test_genomes/dna_fastas \
               -o path/to/output_dir \
-              --kofam 
+              --kofam
 ```
 
 > [!NOTE]
-> By default, `btex-annotate` skips annotating the genomes with KOfam and only runs BTEXgenie. Use `--kofam` to run the KOfam annotation. 
+> By default, `btex-annotate` runs the BTEX HMM search together with the putative-target BLASTP search. Use `--kofam` to additionally run the KOfam annotation.
+> The bundled HMM database used by default is `btexhmm/hmms/BTEXgenie_updated.hmm`; the selected path is recorded in `btex_annotate.log` at the start of every run.
 >
-> For FASTA sequence inputs, the program will run gene-calling with Prodigal in `--single` mode as default, unless the `--meta` specified as input. 
+> For FASTA sequence inputs, the program will run gene-calling with Prodigal in `--single` mode as default, unless the `--meta` specified as input.
 
 **Main outputs**
 
-1. `btex_genie_summary.csv`  
+1. `btex_genie_summary.csv`
    Reports individual BTEX HMM hits, including the matched HMM, the threshold used, the domain evalue, the hit score, and the protein sequence header for the corresponding gene.
 
-2. `btex_genie_summary_counts.csv`  
+2. `btex_genie_summary_counts.csv`
    Summarizes BTEX HMM hits by HMM, reporting hit counts instead of individual protein sequence headers.
 
-3. `prodigal_output/`  
-   Generated when genome DNA sequences are used as input. This directory contains one subdirectory per genome and contains:  
+3. 'btex_putative_blastp_unfiltered_summary.csv'
+   Reports BLASTp alignments between input protein sequences and putative enzyme targets with an E-value below 1 x 10^-5
+
+4. 'btex_putative_blastp_filtered_summary.csv'
+   Reports BLASTp alignments to putative enzyme targets that meet the user defined E-value, sequence identity, and alignment coverage thresholds. 
+
+5. `prodigal_output/`
+   Generated when genome DNA sequences are used as input. This directory contains one subdirectory per genome and contains:
    ` {genome}_prodigal.gbk ` (not produced when the input consists of protein FASTAs)
-   ` {genome}.faa `  
+   ` {genome}.faa `
    ` {genome}_kofam_abv_thres.tsv `, produced when `--kofam` is enabled and the KOfam step runs successfully for that sample.
 
-4. `hmmscan_output/`  
+6. `hmmscan_output/`
    Contains one subdirectory per input file with raw `.domtblout` results generated before and after filtering by GA thresholds.
 
-5. `btex_annotate.log`  
+7. `btex_annotate.log`
    Records run progress as well as detailed warning and error messages.
 
 ## KEGG Pathway visualizations
@@ -181,10 +188,10 @@ btex-vis -g /path/to/prodigal_output \
    > [!NOTE]
    > An HTML file is not generated for a pathway if no hits are detected for that pathway.
 
-   Users can also provide additional KEGG pathway IDs separated by comma with `--pathways`. 
+   Users can also provide additional KEGG pathway IDs separated by comma with `--pathways`.
    A full list of KEGG pathways is available [here](https://www.genome.jp/kegg/pathway.html#energy).
 
-2. {output_dir}/`sample_color_legend.tsv` 
+2. {output_dir}/`sample_color_legend.tsv`
    Contains the color assigned to each input genome for KEGG pathway visualization.
 
 
@@ -209,11 +216,11 @@ btex-run-circos \
   -o /path/to/outdir \
   -s sample_name \
   --prodigal-gbk /path/to/sample_prodigal.gbk \
-  --kofam-output /path/to/kofam_abv_thres.tsv 
+  --kofam-output /path/to/kofam_abv_thres.tsv
 ```
 
 > [!Note]
-> Optionally, `btex-run-circos` takes `--prodigal-gbk`, which specifies the Prodigal GenBank file used to parse genomic coordinates of genes, and `--kofam-output`, which contains all hits to the KOfam HMM database. These files are produced by `btex-annotate` with the `--kofam` flag with DNA FASTA inputs.  
+> Optionally, `btex-run-circos` takes `--prodigal-gbk`, which specifies the Prodigal GenBank file used to parse genomic coordinates of genes, and `--kofam-output`, which contains all hits to the KOfam HMM database. These files are produced by `btex-annotate` with the `--kofam` flag with DNA FASTA inputs.
 
 
 **Input:**
@@ -223,21 +230,21 @@ btex-run-circos \
 
 **Output**
 
-1. `{output_dir}/circos_plot.pdf`  
+1. `{output_dir}/circos_plot.pdf`
    Main visualization showing the genome track, GC skew track, and genomic distribution of BTEXgenie hits. Optionally includes a KOfam track displaying hits to xenobiotic degradation pathways on KEGG.
 
-2. `{output_dir}/kofam_density_track_windows.tsv`  
+2. `{output_dir}/kofam_density_track_windows.tsv`
    Table of pathway density values across genomic windows for xenobiotic degradation pathways.
 
-3. `{output_dir}/btex_genie_hits.gbk`  
+3. `{output_dir}/btex_genie_hits.gbk`
    GenBank formatted file listing genes identified as BTEXgenie hits.
 
-4. `{output_dir}/kofam_category_hits.tsv`  
+4. `{output_dir}/kofam_category_hits.tsv`
    Table of all KOfam hits with their corresponding KO identifiers.
 
-5. `gene_hits.tsv`, `karyotype.tsv`, `hmm_colors.tsv`, `contig_length.tsv`  
+5. `gene_hits.tsv`, `karyotype.tsv`, `hmm_colors.tsv`, `contig_length.tsv`
    Configuration files used to generate the Circos plot.
-   
+
 
 **Example output using the Aromatoleum bremense PbN1T genome:**
 <p align="center">

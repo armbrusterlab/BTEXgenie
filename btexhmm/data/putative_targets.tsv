@@ -1,0 +1,4 @@
+query_id	system	component	report_name	evidence_level
+Geob_0241	benzene_methylation	methyltransferase	Geob_0241-like protein	putative
+Gmet_0231	benzene_hydroxylation	component_1	Gmet_0231-like protein	putative
+Gmet_0232	benzene_hydroxylation	component_2	Gmet_0232-like protein	putative

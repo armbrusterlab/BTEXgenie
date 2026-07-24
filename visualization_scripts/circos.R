@@ -78,7 +78,7 @@ make_density_shades <- function(base_hex, n_levels = 4) {
 }
 
 infer_default_pathway_map <- function() {
-  candidate1 <- file.path("/home/juneq/BTEX-HMMs/btexhmm/data/pathway_map.tsv")
+  candidate1 <- file.path("/home/juneq/BTEXgenie/btexhmm/data/pathway_map.tsv")
   if (file.exists(candidate1)) return(candidate1)
   stop(
     sprintf("[ERROR] Default pathway map not found. Tried:\n  %s\nUse --pathway-map to provide it explicitly.", candidate1),

@@ -1,31 +1,47 @@
 hmm	pathway	color
-tmoA_tbuA1_touA	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-tmoB_tbuU_touB	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-tmoC_tbuB_touC	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-tmoD_tbuV_touD	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-tmoE_tbuA2	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-tmoF_tbuC_touF	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
-todA	Toluene/Benzene Dioxygenase	#33a02c
-todB	Toluene/Benzene Dioxygenase	#33a02c
-todC1_bedC1	Toluene/Benzene Dioxygenase	#33a02c
-todC2_bedC2	Toluene/Benzene Dioxygenase	#33a02c
-todD	Toluene/Benzene Dioxygenase	#33a02c
-tomA1	Toluene 2-Monooxygenase	#ff7f00
-tomA2	Toluene 2-Monooxygenase	#ff7f00
-tomA3	Toluene 2-Monooxygenase	#ff7f00
-tomA4	Toluene 2-Monooxygenase	#ff7f00
-tomA5	Toluene 2-Monooxygenase	#ff7f00
-bssA	Anaerobic Toluene Degradation	#6a3d9a
-bssB	Anaerobic Toluene Degradation	#6a3d9a
-xylA	Xylene Degradation	#e31a1c
-xylM	Xylene Degradation	#e31a1c
-edoA1	Ethylbenzene Degradation	#a65628
-edoA2	Ethylbenzene Degradation	#a65628
-ndoB	Ethylbenzene Degradation	#a65628
-catA	Catechol Degradation (intradiol)	#b2df8a
-xylE	Catechol Degradation (extradiol)	#fb9a99
-ebdA	Ethylbenzene Degradation	#a65628
-ebdB	Ethylbenzene Degradation	#a65628
-ebdC	Ethylbenzene Degradation	#a65628
-bcrA_type_I	Benzoyl-CoA Reductase Type I	#cab2d6
-bcrA_type_II	Benzoyl-CoA Reductase Type II	#ffff99
+AbcA_PpcA	Alkylbenzene\phenylphosphate_carboxylase	#00CED1
+AbcD_PpcC	Alkylbenzene\phenylphosphate_carboxylase	#00CED1
+BamB	Benzoyl-CoA_reductase_type_II	#00CED1
+Bcl	Benzoate-CoA_ligase	#00CED1
+BcrA	Benzoyl-CoA_reductase_type_I	#00CED1
+BcrB	Benzoyl-CoA_reductase_type_I	#00CED1
+BssA_HbsA	Benzylsuccinate\Hydroxybenzyl_synthase	#00CED1
+BssB_HbsB	Benzylsuccinate\Hydroxybenzyl_synthase	#00CED1
+CatA	Catechol Degradation (intradiol)	#b2df8a
+DmpK	Phenol-hydroxylase	#E7298A
+DmpL	Phenol-hydroxylase	#E7298A
+DmpM	Phenol-hydroxylase	#E7298A
+DmpN	Phenol-hydroxylase	#E7298A
+DmpO	Phenol-hydroxylase	#E7298A
+DmpP	Phenol-hydroxylase	#E7298A
+EbdA	Ethylbenzene Degradation	#a65628
+EbdB	Ethylbenzene Degradation	#a65628
+EbdC	Ethylbenzene Degradation	#a65628
+EdoA1_AkbA1	Ethylbenzene\Alkybenzene_dioxygenase	#6A3D9A
+EdoA2_AkbA2	Ethylbenzene\Alkybenzene_dioxygenase	#6A3D9A
+EdoA3_AkbA3	Ethylbenzene\Alkybenzene_dioxygenase	#6A3D9A
+NdoB	Ethylbenzene Degradation	#a65628
+NidA	Naphthalene-inducible_dioxygenase	#1B9E77
+NidB	Naphthalene-inducible_dioxygenase	#1B9E77
+PpsA	Phenylphosphate_synthase	#E6AB02
+PpsB	Phenylphosphate_synthase	#E6AB02
+TmoA_TbuA1_TouA	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TmoB_TbuU_TouB	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TmoC_TbuB_TouC	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TmoD_TbuV_TouD	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TmoE_TbuA2	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TmoF_TbuC_TouF	Toluene 4-Monooxygenase/Toluene 3-Monooxygenase/Toluene o-xylene Monooxygenase	#1f78b4
+TodA	Toluene/Benzene Dioxygenase	#33a02c
+TodB	Toluene/Benzene Dioxygenase	#33a02c
+TodC1_BedC1	Toluene/Benzene Dioxygenase	#33a02c
+TodC2_BedC2	Toluene/Benzene Dioxygenase	#33a02c
+TodD	Toluene/Benzene Dioxygenase	#33a02c
+TomA1	Toluene 2-Monooxygenase	#ff7f00
+TomA2	Toluene 2-Monooxygenase	#ff7f00
+TomA3	Toluene 2-Monooxygenase	#ff7f00
+TomA4	Toluene 2-Monooxygenase	#ff7f00
+TomA5	Toluene 2-Monooxygenase	#ff7f00
+UbiX	UbiX-like_carboxylase	#00CED1
+XylA	Xylene Degradation	#e31a1c
+XylE	Catechol Degradation (extradiol)	#fb9a99
+XylM	Xylene Degradation	#e31a1c

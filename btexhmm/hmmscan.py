@@ -8,6 +8,11 @@ try:
 except ImportError:
     from logging_utils import print_log_only, run_logged_command
 
+try:
+    from .putative_blast import FilterSettings, run_putative_blastp
+except ImportError:
+    from putative_blast import FilterSettings, run_putative_blastp
+
 # This script runs hmmscan on all the HMMs with input protein-coding files and outputs detailed TSV 
 # btexgenie_summary with columns: sample, hmm, hits, scores, evalues, cutoff_used, total_genes, hit_headers.
 # The cutoff_used column is is the sequence-level GA threshold from the HMM library.
@@ -461,6 +466,49 @@ def main(argv: list[str] | None = None):
         required=True,
         help="CSV path for hit-level output (sample,hmm,score,evalue,cutoff_used,hit_header)",
     )
+
+    ap.add_argument(
+        "--putative-blast",
+        action="store_true",
+        help="Search proposed BTEX pathway proteins against the input protein sequences",
+    )
+
+    ap.add_argument(
+        "--putative-targets",
+        help="FASTA file or directory containing putative target proteins",
+    )
+
+    ap.add_argument(
+        "--putative-metadata",
+        help="Metadata TSV describing the putative target proteins",
+    )
+
+    ap.add_argument(
+        "--blast-min-identity",
+        type=float,
+        default=25.0,
+    )
+
+    ap.add_argument(
+        "--blast-min-query-coverage",
+        type=float,
+        default=50.0,
+    )
+
+    ap.add_argument(
+        "--blast-min-subject-coverage",
+        type=float,
+        default=50.0,
+    )
+    ap.add_argument(
+        "--blast-evalue",
+        type=float,
+        default=1e-5,
+        help=(
+            "BLASTP E-value threshold for putative target searches "
+            "(default: 1e-5)"
+        ),
+    )
     args = ap.parse_args(argv)
 
     check_bin("hmmscan")
@@ -640,6 +688,41 @@ def main(argv: list[str] | None = None):
             )
 
     print(f"wrote {counts_path}")
+
+    if args.putative_blast:
+        if not args.putative_targets:
+            raise SystemExit(
+                "[err] --putative-targets is required when "
+                "--putative-blast is enabled"
+            )
+
+        putative_filters = FilterSettings(
+            evalue=args.blast_evalue,
+            min_identity=args.blast_min_identity,
+            min_query_coverage=args.blast_min_query_coverage,
+            min_subject_coverage=args.blast_min_subject_coverage,
+        )
+
+        try:
+            run_putative_blastp(
+                protein_fastas=protein_fastas,
+                targets_path=Path(args.putative_targets),
+                output_root=output_root,
+                cpus=args.cpus,
+                metadata_path=(
+                    Path(args.putative_metadata)
+                    if args.putative_metadata
+                    else None
+                ),
+                filters=putative_filters,
+            )
+        except (FileNotFoundError, ValueError, RuntimeError) as exc:
+            raise SystemExit(f"[err] putative BLASTP search failed: {exc}") from exc
+    else:
+        print(
+            "[info] skipping putative-target BLASTP; "
+            "use --putative-blast to enable it"
+        )
 
     if args.kofam:
         try:
